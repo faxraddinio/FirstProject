@@ -1,8 +1,11 @@
 package com.example.firstproject.Student;
 
 import jakarta.persistence.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.Period;
+
 /*
 * Model of Student entity
 */
@@ -27,28 +30,27 @@ public class Student {
     String name;
     String email;
     LocalDate dob;
-    Integer age;
+    @Transient
+    Integer age; // so age are dynamic var, we exclude "age" from table and remove it from constructor params
 
     public Student() {
     }
 
-    public Student(Long id, String name, String email, LocalDate dob, Integer age) {
+    public Student(Long id, String name, String email, LocalDate dob) { // remove age from here
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
 
     /*
     * Create constructor without ID (because our generator will generate the ID automatically)
     */
 
-    public Student(String name, String email, LocalDate dob, Integer age) {
+    public Student(String name, String email, LocalDate dob) { // remove age from here
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
 
     public Long getId() {
@@ -83,8 +85,8 @@ public class Student {
         this.dob = dob;
     }
 
-    public Integer getAge() {
-        return age;
+    public Integer getAge() { // and ve get the age from this mechanism, we calculate period between dob and now and return years
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {

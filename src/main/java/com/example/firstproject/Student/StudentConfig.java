@@ -17,17 +17,15 @@ public class StudentConfig {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepo repo){
         return args -> {
-            Student fakhri = new Student(
+            Student fakhri = new Student( // and delete age from here so
                           "fakhri",
                           "mammedovfahri@gmail.com",
-                          LocalDate.of(2004, Month.AUGUST,19),
-                          19
+                          LocalDate.of(2004, Month.AUGUST,19)
             );
-            Student maryam = new Student(
+            Student maryam = new Student( // and delete age from here so
                         "maryam",
                         "maryamkaguliyeva@gmail.com",
-                        LocalDate.of(2005, Month.AUGUST,24),
-                        18
+                        LocalDate.of(2005, Month.AUGUST,24)
             );
 
             // Now save all students (one by one or all together)
