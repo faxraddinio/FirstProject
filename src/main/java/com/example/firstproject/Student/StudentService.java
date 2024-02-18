@@ -70,6 +70,8 @@ public class StudentService {
 
 
 
+    // we use it because if something goes wrong in some block of code , it doest save any changes and throw error
+    // without this annotation if I have a problem in first or second block of code, changes will be saved in correct block of code but not in error block of code
     @Transactional
     public void updateExistStudent(Long id, Student studentDetails) {
         Student exist_student = studentRepo.findById(id)
