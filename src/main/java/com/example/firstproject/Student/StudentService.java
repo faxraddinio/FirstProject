@@ -34,23 +34,9 @@ public class StudentService {
     @GetMapping("/students")
     public List<Student> getStudents(){
         return studentRepo.findAll();
-//        return List.of(
-//                new Student(
-//                        1L,
-//                        "fakhri",
-//                        "mammedovfahri@gmail.com",
-//                        LocalDate.of(2004, Month.AUGUST,19),
-//                        19
-//                ),
-//                new Student(
-//                        2L,
-//                        "maryam",
-//                        "maryamkaguliyeva@gmail.com",
-//                        LocalDate.of(2005, Month.AUGUST,24),
-//                        18
-//                )
-//        );
     }
+
+    //post method functionality
 
     public void addNewStudent(Student student) { // here ve create method that output student details in JSON format in console
         Optional<Student> optionalStudentEmail = studentRepo.findAllByEmail(student.getEmail()); // create a var for check if user email is exist in database
@@ -64,17 +50,20 @@ public class StudentService {
 
     }
 
-    /*NOTE!!!!!
-    * here we use method existsById but not findById
-    * it's because when we need to delete user we need delete method, in existsById we have one
-    */
+
     public void deleteStudent(Long studentID) {
-        boolean exist = studentRepo.existsById(studentID);//USING existsById we check if database have that id, if yes delete that student, else throwing exception
+      boolean exist = studentRepo.existsById(studentID);//USING existsById we check if database have that id, if yes delete that student, else throwing exception
 
-        if (!exist){
-            throw new IllegalStateException("the id " + studentID + " doesnt exist");
-        }
+      if (!exist){
+          throw new IllegalStateException("the id " + studentID + " doesnt exist");
+      }
 
+      //We also can do this way
+//        Optional<Student> student = studentRepo.findById(studentID);
+//
+//        if (student.isEmpty()){
+//            throw new IllegalStateException("student with id " + studentID + " not exist");
+//        }
         studentRepo.deleteById(studentID);
         
     }

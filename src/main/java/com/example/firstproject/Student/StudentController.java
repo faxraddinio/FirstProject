@@ -39,9 +39,9 @@ public class StudentController {
         studentService.deleteStudent(studentId);
     }
 
-    // IN PUT REQUEST EMAIL DOESNT CHANGE!!!!!!!!!!! (StudentService.class)
+
     @PutMapping("/update/{studentId}")
-    public void updateExistStudent(@PathVariable Long studentId, @RequestBody Student studentDetails) {
+    public void updateExistStudent(@PathVariable Long studentId, @RequestBody Student studentDetails) {// put request get id as pathVariable to find by id and update/modify student details and requestBody like this param will be accepting an arguments
         studentService.updateExistStudent(studentId, studentDetails);
     }
 
