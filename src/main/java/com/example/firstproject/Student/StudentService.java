@@ -1,10 +1,12 @@
 package com.example.firstproject.Student;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 // Mention with annotations
@@ -75,5 +77,42 @@ public class StudentService {
 
         studentRepo.deleteById(studentID);
         
+    }
+
+
+
+    @Transactional
+    public void updateExistStudent(Long id, Student studentDetails) {
+        Student exist_student = studentRepo.findById(id)
+                .orElseThrow(() -> new  IllegalStateException("Student with given id" + id + "is not found"));
+
+        if (!(studentDetails.getName().length() == 0)
+                && !(studentDetails.getName() == null)
+                && !Objects.equals(exist_student.getName(), studentDetails.getName())){
+            Optional<Student> student = studentRepo.findByName(studentDetails.getName());
+            if (student.isPresent()){
+                throw new IllegalStateException("name is taken");
+            }
+            exist_student.setName(studentDetails.getName());
+        }
+
+
+
+        if (!(studentDetails.getEmail() == null)
+                && !(studentDetails.getEmail().length() == 0)
+                && !Objects.equals(exist_student.getEmail(), studentDetails.getEmail())){
+            Optional<Student> student = studentRepo.findByEmail(studentDetails.getEmail());
+            if (student.isPresent()){
+                throw new IllegalStateException("email is taken");
+            }
+
+            exist_student.setEmail(studentDetails.getEmail());
+        }
+
+
+
+        studentRepo.save(exist_student);
+
+
     }
 }

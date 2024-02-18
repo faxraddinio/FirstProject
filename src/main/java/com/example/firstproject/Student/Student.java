@@ -12,6 +12,7 @@ import java.time.Period;
 @Entity
 @Table
 public class Student {
+
     @Id
     /*
     * Using @SequenceGenerator to automatically give an ID to every created student (allocationSize = 1)
